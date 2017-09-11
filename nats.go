@@ -17,4 +17,5 @@ type Connector interface {
 	Request(subj string, data []byte, timeout time.Duration) (*nats.Msg, error)
 	Publish(subj string, data []byte) error
 	Subscribe(subj string, cb nats.MsgHandler) (*nats.Subscription, error)
+	QueueSubscribe(subj string, queue string, cb nats.MsgHandler) (*nats.Subscription, error)
 }
