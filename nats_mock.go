@@ -35,9 +35,17 @@ func (f *FakeConnector) ResetHandlers() {
 	f.Handlers = make(map[string]nats.MsgHandler)
 }
 
+func (f *FakeConnector) Close() {
+	f.Reset()
+}
+
 func (f *FakeConnector) Request(subj string, data []byte, timeout time.Duration) (*nats.Msg, error) {
 	msg := &nats.Msg{Subject: subj, Data: data}
 	f.Events[subj] = append(f.Events[subj], msg)
+
+	if f.Handlers[subj] == nil {
+		return nil, nats.ErrTimeout
+	}
 
 	f.Handlers[subj](msg)
 
