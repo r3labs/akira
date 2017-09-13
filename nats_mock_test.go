@@ -26,7 +26,7 @@ func TestFakeRequest(t *testing.T) {
 	fc := NewFakeConnector()
 	fc.Subscribe("test.message", func(msg *nats.Msg) {
 		if strings.Contains(string(msg.Data), "ping") {
-			msg.Data = []byte(`{"message": "pong"}`)
+			fc.Publish(msg.Reply, []byte(`{"message": "pong"}`))
 		}
 	})
 
