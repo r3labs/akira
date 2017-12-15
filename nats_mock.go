@@ -59,7 +59,11 @@ func (f *FakeConnector) Request(subj string, data []byte, timeout time.Duration)
 	f.Events[subj] = append(f.Events[subj], msg)
 
 	if f.Handlers[subj] == nil {
-		return nil, nats.ErrTimeout
+		// check for wildcard subscription
+		if f.Handlers[">"] == nil {
+			return nil, nats.ErrTimeout
+		}
+		subj = ">"
 	}
 
 	f.Handlers[subj](msg)
