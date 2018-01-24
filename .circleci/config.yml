@@ -3,9 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/golang:1.9
-    working_directory: /go/src/github.com/r3labs/akira
+    working_directory: /home/circleci/.go_workspace/src/github.com/r3labs/akira
     steps:
       - checkout
       - run: make dev-deps
-      - run: go test -v ./..t.
-
+      - run: make test
