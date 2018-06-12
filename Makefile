@@ -14,7 +14,7 @@ cover:
 	go test -v ./... --cover
 
 deps:
-	go get github.com/nats-io/nats
+	go get github.com/nats-io/go-nats
 
 dev-deps: deps
 	go get github.com/alecthomas/gometalinter
